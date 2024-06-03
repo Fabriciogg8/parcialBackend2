@@ -1,0 +1,39 @@
+server:
+  port: 8081
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8080/realms/el-aparato-gonzalezFabricio/protocol/openid-connect/certs
+          issuer-uri: http://localhost:8080/realms/el-aparato-gonzalezFabricio
+
+  application:
+    name: springboot-keycloak
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+  datasource:
+    password: ${MYSQL_PASSWORD}
+    username: root
+    initialization-mode: always
+    url: jdbc:mysql://localhost:3306/elaparato?serverTimezone=UTC
+jwt:
+  auth:
+    converter:
+      principal-attribute: preferred_username
+      resource-id: springboot-keycloak-client
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+
+dh:
+  keycloak:
+    server-url: http://localhost:8080
+    realm: el-aparato-gonzalezFabricio
+    client-id: springboot-keycloak-client
+    client-secret: gM2BrAGPMqOegkfKUYvpodVoVLj3a95T
