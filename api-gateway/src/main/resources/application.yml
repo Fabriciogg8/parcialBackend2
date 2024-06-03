@@ -1,0 +1,35 @@
+server:
+  port: 9091
+spring:
+  cloud:
+    gateway:
+      default-filters:
+        - TokenRelay
+      routes:
+        -   id: hello-service
+            predicates:
+              - Path=/**
+            uri: http://localhost:8081
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak-test:
+            issuer-uri: http://localhost:8080/realms/el-aparato-gonzalezFabricio
+        registration:
+          keycloak-test:
+            authorization-grant-type: authorization_code
+            clientId: springboot-keycloak-client
+            clientSecret: ywGN8wByv5PnvbwdNEcFCAU5BkDDYJ5R
+
+            redirect-uri: http://localhost:9091/login/oauth2/code/keycloak
+            scope:
+              - openid
+              - profile
+              - email
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
